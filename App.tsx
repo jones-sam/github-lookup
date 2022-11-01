@@ -6,11 +6,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { GithubUser } from "./datasource/github";
 import Profile from "./screens/profile";
 import NotFound from "./screens/NotFound";
+import UserList from "./screens/UserList";
 
 export type RootStackParamList = {
   Search: undefined;
   Profile: { username: string; user: GithubUser };
   NotFound: { username: string };
+  UserList: { type: "followers" | "following"; username: string };
 };
 
 export default function App() {
@@ -36,6 +38,14 @@ export default function App() {
             name="NotFound"
             component={NotFound}
             options={{ title: "Not Found" }}
+          />
+
+          <Stack.Screen
+            name="UserList"
+            component={UserList}
+            options={({ route }) => ({
+              title: `${route.params.username} ${route.params.type}`,
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>

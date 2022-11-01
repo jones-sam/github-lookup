@@ -5,6 +5,7 @@ import { Button, SafeAreaView, Text, TextInput } from "react-native";
 import { useQuery } from "react-query";
 import { RootStackParamList } from "../App";
 import { getGithubUser } from "../datasource/github";
+import { useGithubUserSearch } from "../hooks/useGithubUserSearch";
 import { styles } from "../styles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Search">;
@@ -12,11 +13,9 @@ type Props = NativeStackScreenProps<RootStackParamList, "Search">;
 export default function Search({ navigation }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { refetch, isLoading } = useQuery(
-    ["user", searchQuery],
-    () => getGithubUser(searchQuery),
-    { enabled: false, staleTime: 300000 }
-  );
+  const { refetch, isLoading } = useGithubUserSearch(searchQuery);
+
+  const searchDisabled = isLoading || searchQuery.length === 0;
 
   const onSearch = async () => {
     if (searchDisabled) return;
@@ -28,8 +27,6 @@ export default function Search({ navigation }: Props) {
     }
     navigation.navigate("Profile", { user: res.data, username: searchQuery });
   };
-
-  const searchDisabled = isLoading || searchQuery.length === 0;
 
   return (
     <SafeAreaView style={styles.container}>
