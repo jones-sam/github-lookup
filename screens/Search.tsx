@@ -1,29 +1,30 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import {
-  Button,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Button, SafeAreaView, Text, TextInput } from "react-native";
 import { useQuery } from "react-query";
+import { RootStackParamList } from "../App";
 import { getGithubUser } from "../datasource/github";
+import { styles } from "../styles";
 
-export default function Search({ navigation }) {
+type Props = NativeStackScreenProps<RootStackParamList, "Search">;
+
+export default function Search({ navigation }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, refetch, isLoading } = useQuery(
+  const { data, refetch, isLoading, isError } = useQuery(
     ["user", searchQuery],
     () => getGithubUser(searchQuery),
     { enabled: false }
   );
 
   const onSearch = async () => {
-    await refetch();
-    navigation.navigate("Profile");
+    let res = await refetch();
+    if (res.isError) {
+      navigation.navigate("NotFound", { username: searchQuery });
+      return;
+    }
+    navigation.navigate("Profile", { user: data });
   };
 
   return (
@@ -37,38 +38,16 @@ export default function Search({ navigation }) {
           setSearchQuery(e);
         }}
         autoCapitalize="none"
-        onSubmitEditing={() => {
-          refetch();
-        }}
+        autoCorrect={false}
+        onSubmitEditing={onSearch}
       />
-      <Button
-        title="Search"
-        onPress={() => {
-          refetch();
-        }}
-      />
+      {isLoading ? (
+        <Text style={{ marginTop: 10 }}>Searching...</Text>
+      ) : (
+        <Button title="Search" onPress={onSearch} />
+      )}
 
       <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  searchBar: {
-    borderWidth: 1,
-    width: "80%",
-    height: 40,
-    padding: 10,
-    marginTop: 16,
-    borderRadius: 8,
-  },
-});

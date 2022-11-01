@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "https://api.github.com";
 
-interface GithubUser {
+export interface GithubUser {
   avatar_url: string;
   followers: number;
   following: number;
