@@ -27,7 +27,6 @@ export const getFollowers = async (
 ): Promise<GithubFollower[]> => {
   const res = await axios.get(`${BASE_URL}/users/${username}/followers`);
   const data: GithubFollower[] = res.data;
-  console.log(data[0]);
   return data;
 };
 
