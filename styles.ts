@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
+    fontSize: 28,
   },
   container: {
     flex: 1,
@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     marginTop: 16,
+    marginBottom: 8,
     borderRadius: 8,
   },
   followerText: {
