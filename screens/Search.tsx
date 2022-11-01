@@ -19,6 +19,8 @@ export default function Search({ navigation }: Props) {
   );
 
   const onSearch = async () => {
+    if (searchDisabled) return;
+
     let res = await refetch();
     if (res.isError) {
       navigation.navigate("NotFound", { username: searchQuery });
@@ -26,6 +28,8 @@ export default function Search({ navigation }: Props) {
     }
     navigation.navigate("Profile", { user: res.data, username: searchQuery });
   };
+
+  const searchDisabled = isLoading || searchQuery.length === 0;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,13 +42,14 @@ export default function Search({ navigation }: Props) {
           setSearchQuery(e);
         }}
         autoCapitalize="none"
+        editable={!isLoading}
         autoCorrect={false}
         onSubmitEditing={onSearch}
       />
       {isLoading ? (
         <Text style={{ marginTop: 10 }}>Searching...</Text>
       ) : (
-        <Button title="Search" onPress={onSearch} />
+        <Button title="Search" disabled={searchDisabled} onPress={onSearch} />
       )}
 
       <StatusBar style="auto" />
