@@ -9,7 +9,7 @@ import NotFound from "./screens/NotFound";
 
 export type RootStackParamList = {
   Search: undefined;
-  Profile: { user: GithubUser };
+  Profile: { username: string; user: GithubUser };
   NotFound: { username: string };
 };
 
@@ -27,7 +27,11 @@ export default function App() {
             component={Search}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={({ route }) => ({ title: route.params.username })}
+          />
           <Stack.Screen
             name="NotFound"
             component={NotFound}

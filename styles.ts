@@ -17,4 +17,8 @@ export const styles = StyleSheet.create({
     marginTop: 16,
     borderRadius: 8,
   },
+  followerText: {
+    fontSize: 20,
+    marginLeft: 8,
+  },
 });

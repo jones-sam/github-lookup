@@ -12,10 +12,10 @@ type Props = NativeStackScreenProps<RootStackParamList, "Search">;
 export default function Search({ navigation }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, refetch, isLoading, isError } = useQuery(
+  const { refetch, isLoading } = useQuery(
     ["user", searchQuery],
     () => getGithubUser(searchQuery),
-    { enabled: false }
+    { enabled: false, staleTime: 300000 }
   );
 
   const onSearch = async () => {
@@ -24,7 +24,7 @@ export default function Search({ navigation }: Props) {
       navigation.navigate("NotFound", { username: searchQuery });
       return;
     }
-    navigation.navigate("Profile", { user: data });
+    navigation.navigate("Profile", { user: res.data, username: searchQuery });
   };
 
   return (
