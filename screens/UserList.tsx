@@ -39,6 +39,10 @@ export default function UserList({ route, navigation }: Props) {
   const data = type === "followers" ? followerData : followingData;
 
   useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = () => {
     if (type == "followers") {
       fetchFollowers();
       return;
@@ -46,7 +50,7 @@ export default function UserList({ route, navigation }: Props) {
       fetchFollowing();
       return;
     }
-  }, []);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -56,6 +60,8 @@ export default function UserList({ route, navigation }: Props) {
         <FlatList
           style={{ padding: 8 }}
           data={data}
+          onRefresh={fetchUsers}
+          refreshing={isLoading}
           renderItem={(x) => (
             <TouchableOpacity
               onPress={() => {

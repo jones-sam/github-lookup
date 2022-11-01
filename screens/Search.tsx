@@ -1,7 +1,13 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Button, SafeAreaView, Text, TextInput } from "react-native";
+import {
+  Button,
+  RefreshControl,
+  SafeAreaView,
+  Text,
+  TextInput,
+} from "react-native";
 import { RootStackParamList } from "../App";
 import { useGithubUserSearch } from "../hooks/useGithubUserSearch";
 import { styles } from "../styles";
