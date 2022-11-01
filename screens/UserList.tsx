@@ -5,7 +5,6 @@ import {
   Image,
   FlatList,
   SafeAreaView,
-  View,
   TouchableOpacity,
 } from "react-native";
 import { useQuery } from "react-query";

@@ -2,9 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { Button, SafeAreaView, Text, TextInput } from "react-native";
-import { useQuery } from "react-query";
 import { RootStackParamList } from "../App";
-import { getGithubUser } from "../datasource/github";
 import { useGithubUserSearch } from "../hooks/useGithubUserSearch";
 import { styles } from "../styles";
 

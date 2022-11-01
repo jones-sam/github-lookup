@@ -6,11 +6,8 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { useQuery } from "react-query";
 import { RootStackParamList } from "../App";
-import { getFollowers, getFollowing } from "../datasource/github";
 import { styles } from "../styles";
-import { Link } from "@react-navigation/native";
 import { useEffect } from "react";
 import { useGithubUserSearch } from "../hooks/useGithubUserSearch";
 
